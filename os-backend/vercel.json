@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "package.json",
       "use": "@vercel/node"
     }
   ],
@@ -12,7 +12,9 @@
       "dest": "/src/server.js"
     }
   ],
-  "env": {
-    "NODE_ENV": "production"
+  "functions": {
+    "src/server.js": {
+      "includeFiles": "src/**"
+    }
   }
 }
