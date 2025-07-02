@@ -4,9 +4,9 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
-//import clienteRoutes from './routes/clientes.js';
-//import servicoRoutes from './routes/servicos.js';
-//import osRoutes from './routes/ordens.js';
+import clienteRoutes from './routes/clientes.js';
+import servicoRoutes from './routes/servicos.js';
+import osRoutes from './routes/ordens.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 dotenv.config();
@@ -25,16 +25,16 @@ const limiter = rateLimit({
 app.use(helmet());
 app.use(limiter);
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://client-control-mu.vercel.app',
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-//app.use('/api/clientes', clienteRoutes);
-//app.use('/api/servicos', servicoRoutes);
-//app.use('/api/os', osRoutes);
+app.use('/api/clientes', clienteRoutes);
+app.use('/api/servicos', servicoRoutes);
+app.use('/api/os', osRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
