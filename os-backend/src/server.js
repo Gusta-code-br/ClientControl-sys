@@ -31,6 +31,13 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// DEBUG: Log todas as requisições
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} - ${new Date().toISOString()}`);
+  console.log('Headers:', req.headers);
+  next();
+});
+
 // Routes
 app.use('/api/clientes', clienteRoutes);
 app.use('/api/servicos', servicoRoutes);
@@ -45,8 +52,8 @@ app.get('/health', (req, res) => {
 app.use(errorHandler);
 
 // 404 handler
-// NEW - FIXED
 app.use((req, res) => {
+  console.log(`404 - Endpoint não encontrado: ${req.method} ${req.path}`);
   res.status(404).json({ error: 'Endpoint não encontrado' });
 });
 
